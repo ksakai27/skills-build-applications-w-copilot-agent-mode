@@ -21,3 +21,4 @@ class WorkoutViewSet(viewsets.ModelViewSet):
 class LeaderboardViewSet(viewsets.ModelViewSet):
     queryset = Leaderboard.objects.all()
     serializer_class = LeaderboardSerializer
+#
