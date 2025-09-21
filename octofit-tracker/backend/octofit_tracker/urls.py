@@ -20,6 +20,8 @@ from rest_framework import routers
 from .views import TeamViewSet, UserViewSet, ActivityViewSet, WorkoutViewSet, LeaderboardViewSet
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
+import os
+from urllib.parse import urljoin
 
 router = routers.DefaultRouter()
 router.register(r'teams', TeamViewSet)
@@ -30,6 +32,21 @@ router.register(r'leaderboard', LeaderboardViewSet)
 
 @api_view(['GET'])
 def api_root(request, format=None):
+    # Prefer a Codespaces-hosted URL using the environment variable CODESPACE_NAME
+    # e.g. https://$CODESPACE_NAME-8000.app.github.dev/
+    codespace = os.environ.get('CODESPACE_NAME')
+    if codespace:
+        base = f"https://{codespace}-8000.app.github.dev/api/"
+        # use urljoin to safely append paths
+        return Response({
+            'teams': urljoin(base, 'teams/'),
+            'users': urljoin(base, 'users/'),
+            'activities': urljoin(base, 'activities/'),
+            'workouts': urljoin(base, 'workouts/'),
+            'leaderboard': urljoin(base, 'leaderboard/'),
+        })
+
+    # Fallback to request-built absolute URIs (works on localhost or tunneled envs)
     return Response({
         'teams': request.build_absolute_uri('teams/'),
         'users': request.build_absolute_uri('users/'),

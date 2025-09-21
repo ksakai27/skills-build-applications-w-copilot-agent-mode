@@ -29,7 +29,8 @@ class ActivitySerializer(serializers.ModelSerializer):
 
 class WorkoutSerializer(serializers.ModelSerializer):
     id = ObjectIdField(read_only=True)
-    suggested_for = ObjectIdField(many=True)
+    # suggested_for is a list of ObjectIds; represent it with a ListField whose child is ObjectIdField
+    suggested_for = serializers.ListField(child=ObjectIdField())
     class Meta:
         model = Workout
         fields = '__all__'
