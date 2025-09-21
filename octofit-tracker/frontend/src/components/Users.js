@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react'
-import React, { useEffect, useState } from 'react'
 
 function getApiBase() {
   const name = process.env.REACT_APP_CODESPACE_NAME
