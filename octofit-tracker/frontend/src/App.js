@@ -1,11 +1,17 @@
 import React from 'react'
 import { Routes, Route, NavLink } from 'react-router-dom'
-import Activities from './components/Activities'
-import Leaderboard from './components/Leaderboard'
-import Teams from './components/Teams'
-import Users from './components/Users'
-import Workouts from './components/Workouts'
+import Activities from './components/Activities.jsx'
+import Leaderboard from './components/Leaderboard.jsx'
+import Teams from './components/Teams.jsx'
+import Users from './components/Users.jsx'
+import Workouts from './components/Workouts.jsx'
 import './App.css'
+
+function getApiBase() {
+  const name = process.env.REACT_APP_CODESPACE_NAME
+  if (name) return `https://${name}-8000.app.github.dev`
+  return 'http://localhost:8000'
+}
 
 export default function App() {
   return (
@@ -16,6 +22,7 @@ export default function App() {
             <img src="/docs/octofitapp-small.png" alt="Octofit" className="small-logo" />
             <span>Octofit</span>
           </NavLink>
+          <div className="text-white ms-3 small api-badge">API: {getApiBase()}</div>
           <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav">
             <span className="navbar-toggler-icon" />
           </button>
